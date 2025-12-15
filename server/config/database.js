@@ -1,14 +1,29 @@
 const { Pool } = require('pg');
 const config = require('./config');
 
-const poolConfig = {
-  ...config.database
-};
+// Use DATABASE_URL if available (Render provides this), otherwise use individual configs
+const connectionString = process.env.DATABASE_URL;
 
-// Add SSL configuration for production
-if (config.server.env === 'production') {
-  poolConfig.ssl = {
-    rejectUnauthorized: false
+let poolConfig;
+
+if (connectionString) {
+  // Use DATABASE_URL from Render
+  poolConfig = {
+    connectionString: connectionString,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  };
+} else {
+  // Use individual config values (for local development)
+  poolConfig = {
+    host: config.database.host,
+    port: config.database.port,
+    database: config.database.database,
+    user: config.database.user,
+    password: config.database.password,
+    ssl: config.database.ssl,
+    max: config.database.max,
+    idleTimeoutMillis: config.database.idleTimeoutMillis,
+    connectionTimeoutMillis: config.database.connectionTimeoutMillis,
   };
 }
 
