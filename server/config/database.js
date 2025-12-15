@@ -1,7 +1,18 @@
 const { Pool } = require('pg');
 const config = require('./config');
 
-const pool = new Pool(config.database);
+const poolConfig = {
+  ...config.database
+};
+
+// Add SSL configuration for production
+if (config.server.env === 'production') {
+  poolConfig.ssl = {
+    rejectUnauthorized: false
+  };
+}
+
+const pool = new Pool(poolConfig);
 
 // Test database connection
 pool.on('connect', () => {

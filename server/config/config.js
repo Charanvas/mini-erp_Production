@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   server: {
     port: process.env.PORT || 5000,
-    host: process.env.HOST || 'localhost',
+    host: process.env.HOST || '0.0.0.0',
     env: process.env.NODE_ENV || 'development'
   },
   database: {
@@ -12,6 +12,7 @@ module.exports = {
     database: process.env.DB_NAME || 'construction_erp',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || '',
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,

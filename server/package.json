@@ -1,18 +1,16 @@
 {
   "name": "construction-erp-backend",
   "version": "1.0.0",
-  "description": "Construction ERP & Finance System Backend",
+  "description": "Construction ERP Backend",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "db:create": "node -e \"require('./config/database').createDatabase()\"",
-    "db:migrate": "psql -U postgres -d construction_erp -f ./scripts/createTables.sql",
-    "db:seed": "psql -U postgres -d construction_erp -f ./scripts/seedData.sql"
+    "build": "echo 'No build required'"
   },
-  "keywords": ["erp", "finance", "construction"],
-  "author": "Your Name",
-  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
